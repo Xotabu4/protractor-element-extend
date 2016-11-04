@@ -1,0 +1,17 @@
+{
+  "name": "protractor-element-extend",
+  "version": "0.1.0",
+  "description": "Module, that helps you to extend ElementFinder and ElementArrayFinder from protractor by your own custom classes",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "protractor",
+    "extend",
+    "elementfinder",
+    "elementarrayfinder"
+  ],
+  "author": "Oleksandr Khotemskyi <xotabu4@gmail.com> (https://github.com/Xotabu4)",
+  "license": "MIT"
+}
