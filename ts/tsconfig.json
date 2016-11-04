@@ -1,0 +1,13 @@
+{
+    "version": "1.5.0-alpha",
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": "../js"
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ]
+}
