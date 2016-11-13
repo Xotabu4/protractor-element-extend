@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Module, that helps you to extend ElementFinder and ElementArrayFinder from protractor by your own custom classes",
   "main": "js/index.js",
+  "types": "js/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

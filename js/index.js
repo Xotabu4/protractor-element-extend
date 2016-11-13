@@ -7,8 +7,30 @@ class BaseElement extends protractor_1.ElementFinder {
 }
 exports.BaseElement = BaseElement;
 class BaseElementArray extends protractor_1.ElementArrayFinder {
-    constructor(extendable) {
+    constructor(extendable, class_) {
         super(extendable.browser_, extendable.getWebElements, extendable.locator_, extendable.actionResults_);
+        this.class_ = class_;
+    }
+    //TODO: Still want to add typings here. Need to continue experiments with generics.
+    get(indx) {
+        return new this.class_(super.get(indx));
+    }
+    first() {
+        return new this.class_(super.first());
+    }
+    last() {
+        return new this.class_(super.last());
+    }
+    map(func) {
+        return this.map(function (elFinder, index) {
+            return func(new this.class_, index);
+        });
+    }
+    filter(func) {
+        return this.filter(function (elFinder, index) {
+            return func(new this.class_, index);
+        });
     }
 }
 exports.BaseElementArray = BaseElementArray;
+//# sourceMappingURL=index.js.map
