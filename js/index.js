@@ -22,11 +22,13 @@ class BaseElementArray extends protractor_1.ElementArrayFinder {
         return new this.class_(super.last());
     }
     map(func) {
+        //TODO: return result
         return this.map(function (elFinder, index) {
             return func(new this.class_, index);
         });
     }
     filter(func) {
+        //TODO: return result
         return this.filter(function (elFinder, index) {
             return func(new this.class_, index);
         });
