@@ -4,6 +4,9 @@
   "description": "Module, that helps you to extend ElementFinder and ElementArrayFinder from protractor by your own custom classes",
   "main": "js/index.js",
   "types": "js/index.d.ts",
+  "engines": {
+  "node": ">=6.0.0"
+  },
   "scripts": {
     "pretest": "cd ts && tsc",
     "test": "node js/test.js"
