@@ -1,13 +1,9 @@
-import { ElementFinder, ElementArrayFinder } from 'protractor';
-export declare class BaseElement extends ElementFinder {
+import { ElementFinder } from 'protractor';
+/**
+ * This class describe basic fragment that you can use as basic object to inherit
+ * Basically this uses provided element browser_ and elementArrayFinder_
+ * and use it in ElementFinder constructor.
+ */
+export declare class BaseFragment extends ElementFinder {
     constructor(extendable: ElementFinder);
-}
-export declare class BaseElementArray<T extends ElementFinder> extends ElementArrayFinder {
-    private class_;
-    constructor(extendable: ElementArrayFinder, class_: any);
-    get(indx: number): T;
-    first(): T;
-    last(): T;
-    map(func: any): any;
-    filter(func: any): any;
 }
