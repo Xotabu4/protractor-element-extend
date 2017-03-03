@@ -8,19 +8,27 @@ class BaseFragment extends protractor_1.ElementFinder {
 exports.BaseFragment = BaseFragment;
 class BaseArrayFragment extends protractor_1.ElementArrayFinder {
     constructor(extendable, class_) {
-        // let getTypedWebElements = () => {
-        //     return extendable.getWebElements().then(elements => {
-        //         return elements.map((elem) => {
-        //             return new class_(ElementFinder.fromWebElement_(extendable.browser_, extendable, extendable.locator_))
-        //         })
-        //     })
-        // }
         super(extendable.browser_, extendable.getWebElements, extendable.locator(), extendable.actionResults_);
-        let wrapped = (this)['applyAction_']((value, index, array) => {
-            return new class_(protractor_1.ElementFinder.fromWebElement_(extendable.browser_, value, extendable.locator()));
-        });
         this.class_ = class_;
-        return wrapped;
+    }
+    get(ind) {
+        return new this.class_(super.get(ind));
+    }
+    map(mapFn) {
+        return super.map((elementFinder, index) => {
+            return mapFn(new this.class_(elementFinder), index);
+        });
+    }
+    ;
+    filter(filterFn) {
+        return super.filter((elementFinder, index) => {
+            return filterFn(new this.class_(elementFinder), index);
+        });
+    }
+    reduce(reduceFn, initialValue) {
+        return super.reduce((value, elementFinder, index, arr) => {
+            return reduceFn(value, new this.class_(elementFinder), index, arr);
+        }, initialValue);
     }
 }
 exports.BaseArrayFragment = BaseArrayFragment;

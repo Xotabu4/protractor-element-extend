@@ -11,23 +11,30 @@ export class BaseFragment extends ElementFinder {
 export class BaseArrayFragment<T extends ElementFinder> extends ElementArrayFinder {
     private class_
     constructor(extendable: ElementArrayFinder, class_: any) {
-        // let getTypedWebElements = () => {
-        //     return extendable.getWebElements().then(elements => {
-        //         return elements.map((elem) => {
-        //             return new class_(ElementFinder.fromWebElement_(extendable.browser_, extendable, extendable.locator_))
-        //         })
-        //     })
-        // }
         super(extendable.browser_, extendable.getWebElements, extendable.locator(), extendable.actionResults_);
-        let wrapped = (this)['applyAction_']((value: WebElement, index: number, array: WebElement[]) => {
-            return new class_(ElementFinder.fromWebElement_(extendable.browser_, value, extendable.locator()))
-        })
         this.class_ = class_
-
-        return wrapped
     }
 
-    // asElementFinders_(): wdpromise.Promise<T[]> {
-    //     return this.getWebElements()
-    // };
+    get(ind:number) {
+        return new this.class_(super.get(ind))
+    }
+
+    map<T>(mapFn: (elementFinder?: T, index?: number) => T | any): wdpromise.Promise<T[]> {
+        return super.map((elementFinder, index)=> {
+            return mapFn(new this.class_(elementFinder), index)
+        })
+    };
+
+    filter(filterFn: (elementFinder: ElementFinder, index?: number) => boolean | wdpromise.Promise<boolean>): ElementArrayFinder {
+        return super.filter((elementFinder, index)=> {
+            return filterFn(new this.class_(elementFinder), index)
+        })
+    }
+
+    reduce(reduceFn: Function, initialValue: any): wdpromise.Promise<any> {
+        return super.reduce((value, elementFinder, index, arr)=> {
+            return reduceFn(value, new this.class_(elementFinder), index, arr)
+        }, initialValue)
+    }
+
 }
