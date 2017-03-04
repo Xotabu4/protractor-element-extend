@@ -9,6 +9,7 @@ exports.BaseFragment = BaseFragment;
 class BaseArrayFragment extends protractor_1.ElementArrayFinder {
     constructor(extendable, class_) {
         super(extendable.browser_, extendable.getWebElements, extendable.locator(), extendable.actionResults_);
+        this.elementArrayFinder_ = extendable;
         this.class_ = class_;
     }
     get(ind) {
@@ -21,9 +22,9 @@ class BaseArrayFragment extends protractor_1.ElementArrayFinder {
     }
     ;
     filter(filterFn) {
-        return super.filter((elementFinder, index) => {
+        return new this.constructor(super.filter((elementFinder, index) => {
             return filterFn(new this.class_(elementFinder), index);
-        });
+        }), this.class_);
     }
     reduce(reduceFn, initialValue) {
         return super.reduce((value, elementFinder, index, arr) => {

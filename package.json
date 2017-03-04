@@ -4,8 +4,12 @@
   "description": "Module, that helps you to extend ElementFinder and ElementArrayFinder from protractor by your own custom classes",
   "main": "js/index.js",
   "types": "js/index.d.ts",
+  "engines": {
+  "node": ">=6.0.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "cd ts && tsc",
+    "test": "node js/test.js"
   },
   "keywords": [
     "protractor",
@@ -16,7 +20,9 @@
   "author": "Oleksandr Khotemskyi <xotabu4@gmail.com> (https://github.com/Xotabu4)",
   "license": "MIT",
   "devDependencies": {
+    "@types/jasmine": "^2.5.3",
     "protractor": "^5.1.1",
-    "typescript": "^2.0.7"
+    "typescript": "^2.0.7",
+    "jasmine": "^2.5.3"
   }
 }
