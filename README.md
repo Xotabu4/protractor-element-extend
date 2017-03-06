@@ -88,7 +88,7 @@ Usage
 
 You can wrap any ElementFinder into your fragment:
 ```typescript
-let checkbox = new Checbox($$('.checkbox').last())
+let checkbox = new Checkbox($$('.checkbox').last())
 ```
 
 You can use your elements inside `browser.wait`
@@ -113,7 +113,7 @@ class Checkbox extends BaseFragment {
 }
 
 ...
-let checkbox = new Checbox($('.checkbox'))
+let checkbox = new Checkbox($('.checkbox'))
 browser.wait(EC.visibilityOf(checkbox), 3000, 'Checkbox should be visible, but loader should not be visible')
 ```
 
