@@ -1,11 +1,31 @@
 /** @internal */
+"use strict";
+const protractor_1 = require("protractor");
+const index_1 = require("./index");
+let Jasmine = require('jasmine');
+let jasmine = new Jasmine();
+///////////////////////////////////////////////////
+///////////////////////MOCKS///////////////////////
+function $(locator) {
+    let browser = {};
+    let actionResults_ = {};
+    return new protractor_1.ElementFinder(browser, $$(locator));
+}
+function $$(locator) {
+    let browser = {};
+    let getWebElements = () => {
+        return Promise.resolve([
+            {}, {}, {}
+        ]);
+    };
+    let actionResults_ = {};
+    return new protractor_1.ElementArrayFinder(browser, getWebElements, locator, actionResults_);
 }
 class TestFragment extends index_1.BaseFragment {
     constructor(elem) {
         super(elem);
     }
 }
-<<<<<<< HEAD
 class TestArrayFragment extends index_1.BaseArrayFragment {
     constructor(elementArrayFinder) {
         super(elementArrayFinder, TestFragment);
@@ -58,16 +78,6 @@ describe('BaseArrayFragment', () => {
         expect(arrayFrag.get(0) instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'get' ");
         expect(arrayFrag.first() instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'first' ");
         expect(arrayFrag.last() instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'last' ");
-=======
-describe('BaseFragment', function () {
-    let testFrag;
-    beforeAll(function () {
-        testFrag = new TestFragment($('html'));
-    });
-    it('should still be ElementFinder', function () {
-        expect(testFrag instanceof protractor_1.ElementFinder).toBe(true, "Fragment still should be ElementFinder");
-        expect(testFrag.locator()).toBe('html', 'Locator must be saved');
->>>>>>> master
     });
 });
 jasmine.execute(['test.js']);
