@@ -1,24 +1,12 @@
-# Protractor Fragments
+[![Build Status](https://travis-ci.org/Xotabu4/protractor-element-extend.svg?branch=master)](https://travis-ci.org/Xotabu4/protractor-element-extend)
+# Protractor Page Fragments
+
 Simple module, that helps you build your own fragments, that are still ElementFinder objects, that brings awesome posibilities to your tests.
 
-===================================
-[![Build Status](https://travis-ci.org/Xotabu4/protractor-element-extend.svg?branch=master)](https://travis-ci.org/Xotabu4/protractor-element-extend)
+Main purpose of this library is to allow easily create your own page fragments, which are still will be valid ElementFinders. 
 
+Also, since version 2.0.0 ElementArrayFinder extension is supported as well! So now you can define own collection of custom fragments and additional methods!
 
-Supported versions
----------------------
-Currently tested on 
-NodeJS:
-- 6.x
-- 7.x
-
-
-ProtractorJS:
-- 5.x
-
-This lib should work on protractor 4.x without modifications. Protractor 3.x will require `browser_` reference rename. PRs are welcome!
-
-Typings for TypeScript are included.
 
 Installing
 ---------------------
@@ -31,16 +19,16 @@ Importing
 ----------------------
 JS:
 `let BaseFragment = require('protractor-element-extend').BaseFragment`
+`let BaseArrayFragment = require('protractor-element-extend').BaseArrayFragment`
 
 TS:
-`import {BaseFragment} from 'protractor-element-extend'`
+`import {BaseFragment, BaseArrayFragment} from 'protractor-element-extend'`
 
 
-Creating own fragment
+Creating own single fragment
 ----------------------
-Main purpose of this library, is to allow easily create your own page fragments, which are still will be valid ElementFinders.
 
-To declare your own fragment, declare your class, extend it from BaseFragment, and pass ElementFinder(WebElement) that represents this fragment to super constructor.
+To declare your own fragment, declare your class, extend it from BaseFragment, and pass ElementFinder(WebElement in protractorJS) that represents this fragment to super constructor.
 
 Here is example how Checkbox fragment can be declared:
 ```typescript
@@ -79,6 +67,45 @@ class Checkbox extends BaseFragment {
 
 }
 ```
+Creating own collection of custom fragments
+----------------------
+Often needed to work with own custom collection of own fragments, not only single fragment. For this purpose BaseArrayFragment is added. This object extends ElementArrayFragment, and overrides methods that return single elements, to return your custom fragments. `.map() .filter() .reduce() .each()` and other will receive your custom fragment as parameter as well.
+
+Here is example how SearchResultsCollection fragment can be declared:
+```typescript
+import { BaseArrayFragment, BaseFragment } from 'protractor-element-extend'
+import { browser, ExpectedConditions as EC, $$ } from 'protractor'
+
+// Describing single search result on our page. Notice that constructor declaration could be skipped, in this case constructor from BaseFragment will be used
+class SearchResult extends BaseFragment {
+
+    isDiscounted() {
+        return this.$('.discount-label').isDisplayed()
+    }
+
+    open() {
+        this.$('button.open').click()
+    }
+}
+
+// Generics - <SearchResults> are needs to be defined to provide typings support.
+class SearchResultsCollection extends BaseArrayFragment<SearchResult> {
+    constructor(elementsToExtend: ElementArrayFinder) {
+        // You should pass ElementArrayFinder into super constructor, and constructor(class) that will be used to wrap each element in your collection
+        super(elementsToExtend, SearchResult);
+    }
+
+    findResultsWithDiscount() {
+        // This will return new SearchResults object with only those SearchResult objects that has isDiscounted == true
+        return this.filter(searchRes => searchRes.isDiscounted())
+    }
+}
+
+// Initializing is the same as BaseFragment, but you need to pass ElementArrayFinder now.
+let searchResults = new SearchResultsCollection($$('.search-result'))
+// Awesome readability for your tests
+searchResults.findResultsWithDiscount().first().open()
+```
 
 Advanced usage
 ----------------------
@@ -87,20 +114,26 @@ You can wrap any ElementFinder into your fragment:
 ```typescript
 let checkbox = new Checkbox($$('.checkbox').last())
 ```
-
-You can use your elements inside `browser.wait`
+--------------------------------
+You can use your fragments everywhere where ElementFinder is expected. For example - inside `browser.wait`
 ```typescript
 browser.wait(EC.elementToBeClickable(checkbox), 5000, 'Checkbox should be clickable')
 ```
-
-You can override default methods, to get even more powerful waits!
+Or inside `executeScript`:
+```typescript
+let checkbox = new Checkbox($('div.checkbox'))
+var tag = browser.executeScript('return arguments[0].tagName', checkbox);
+expect(tag).toEqual('div');
+```
+--------------------------------
+You can override ElementFinder or ElementArrayFinder methods, to get even more powerful waits!
 ```typescript
 ...
 import {promise} from 'protractor'
 
 class Checkbox extends BaseFragment {
   ...
-  
+  // Ovveriding isDisplayed function that is used in visibilityOf method
   isDisplayed() {
     let fragmentDisplayed = super.isDisplayed()
     let loaderDisplayed = $('.loader').isDispayed()
@@ -113,7 +146,7 @@ class Checkbox extends BaseFragment {
 let checkbox = new Checkbox($('.checkbox'))
 browser.wait(EC.visibilityOf(checkbox), 3000, 'Checkbox should be visible, but loader should not be visible')
 ```
-
+--------------------------------
 Try to use fragments by placing fragments one into another:
 ```typescript
 class LoginForm extends BaseFragment {
@@ -138,7 +171,23 @@ class LoginForm extends BaseFragment {
 }
 ```
 
+Supported versions
+---------------------
+Currently tested on 
+NodeJS:
+- 6.x
+- 7.x
+
+ProtractorJS:
+- 5.x
+
+This lib should work on protractor 4.x without modifications (but this is untested). Protractor 3.x will require `browser_` reference rename. PRs are welcome!
+
+Typings for TypeScript are included.
+
+
 Future
 ----------------------
 
 - Better logging for fragments. Provide possibility to set `name` attribute, and if it is not set - try to generate best we can with `locator()` 
+- Want some feature? Feel free to create issue!
