@@ -1,3 +1,4 @@
+/** @internal */
 "use strict";
 const protractor_1 = require("protractor");
 const index_1 = require("./index");
@@ -74,7 +75,9 @@ describe('BaseArrayFragment', () => {
         }).then(done);
     });
     it(' ".get()" must return custom element, not ElementFinder', () => {
-        expect(arrayFrag.get(0) instanceof TestFragment).toBe(true, "You should get custom elements, not ElementFinder while calling 'get' ");
+        expect(arrayFrag.get(0) instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'get' ");
+        expect(arrayFrag.first() instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'first' ");
+        expect(arrayFrag.last() instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'last' ");
     });
 });
 jasmine.execute(['test.js']);

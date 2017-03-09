@@ -9,7 +9,8 @@
   },
   "scripts": {
     "pretest": "cd ts && tsc",
-    "test": "node js/test.js"
+    "test": "node js/test.js",
+    "prepublish": "cd ts && tsc"
   },
   "keywords": [
     "protractor",
@@ -18,7 +19,7 @@
     "elementarrayfinder"
   ],
   "author": "Oleksandr Khotemskyi <xotabu4@gmail.com> (https://github.com/Xotabu4)",
-  "license": "MIT",
+  "license": "WTFPL",
   "devDependencies": {
     "@types/jasmine": "^2.5.3",
     "protractor": "^5.1.1",
