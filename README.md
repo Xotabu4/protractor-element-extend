@@ -16,7 +16,7 @@ NodeJS:
 ProtractorJS:
 - 5.x
 
-Unfortunately, cannot support versions lower that 6, since protractor 5.x does not support them. But this lib should work on protractor 4.x without modifications. Protractor 3.x will require parameter rename. PRs are welcome!
+This lib should work on protractor 4.x without modifications. Protractor 3.x will require `browser_` reference rename. PRs are welcome!
 
 Typings for TypeScript are included.
 
@@ -27,9 +27,6 @@ Installing
 npm install protractor-element-extend --save-dev
 ```
 
-Notice, that this lib works only if you have protractor in your project dependencies, i didn't include it in lib dependencies to not override your protractor version, wich might be different.
-
-
 Importing
 ----------------------
 JS:
@@ -39,7 +36,7 @@ TS:
 `import {BaseFragment} from 'protractor-element-extend'`
 
 
-Usage
+Creating own fragment
 ----------------------
 Main purpose of this library, is to allow easily create your own page fragments, which are still will be valid ElementFinders.
 
@@ -83,7 +80,7 @@ class Checkbox extends BaseFragment {
 }
 ```
 
-Usage
+Advanced usage
 ----------------------
 
 You can wrap any ElementFinder into your fragment:
@@ -144,13 +141,4 @@ class LoginForm extends BaseFragment {
 Future
 ----------------------
 
-- Add possibility to extend `ElementArrayFinder`, this should be in syntax something like this:
-```typescript
-let searchResults = new SearchResults($$('.result'))
-searchResult.get(2) //returns object with SearchResult type, not ElementFinder
-...
-```
-  First experiments shows that protractor still has issue with `.map()` function, You can see first experiments in branch @2.0.0
-
-- Better logging for fragments. Provide possibility to set `name` attribute, and if it is not set - try to generate best we can with `locator()`
- 
+- Better logging for fragments. Provide possibility to set `name` attribute, and if it is not set - try to generate best we can with `locator()` 
