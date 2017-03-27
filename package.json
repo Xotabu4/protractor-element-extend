@@ -2,10 +2,16 @@
   "name": "protractor-element-extend",
   "version": "2.0.0",
   "description": "Module, that helps you to extend ElementFinder and ElementArrayFinder from protractor by your own custom classes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xotabu4/protractor-element-extend"
+  },
+  "author": "Oleksandr Khotemskyi <xotabu4@gmail.com> (https://github.com/Xotabu4)",
+  "license": "WTFPL",
   "main": "js/index.js",
   "types": "js/index.d.ts",
   "engines": {
-  "node": ">=6.0.0"
+    "node": ">=6.0.0"
   },
   "scripts": {
     "pretest": "cd ts && tsc",
@@ -18,8 +24,6 @@
     "elementfinder",
     "elementarrayfinder"
   ],
-  "author": "Oleksandr Khotemskyi <xotabu4@gmail.com> (https://github.com/Xotabu4)",
-  "license": "WTFPL",
   "devDependencies": {
     "@types/jasmine": "^2.5.3",
     "protractor": "^5.1.1",
