@@ -1,16 +1,13 @@
 [![Build Status](https://travis-ci.org/Xotabu4/protractor-element-extend.svg?branch=master)](https://travis-ci.org/Xotabu4/protractor-element-extend)
 # Protractor Page Fragments
 
-Simple module, that helps you build your own fragments, that are still ElementFinder objects, that brings awesome posibilities to your tests.
+Simple module, that helps you build your own page fragments, that are inherited from ElementFinder/ElementArrayFinder objects, that brings awesome posibilities to your ProtractorJS tests.
 
-Main purpose of this library is to allow easily create your own page fragments, which are still will be valid ElementFinders. 
-
-Also, since version 2.0.0 ElementArrayFinder extension is supported as well! So now you can define own collection of custom fragments and additional methods!
-
+You might heard other names for this pattern: Page Components, Page Composition, HTML Elements, Custom WebElements, WebElement inheritance, Page Elements. This is all about the same.
 
 Installing
 ---------------------
-
+As any other NPM package:
 ```
 npm install protractor-element-extend --save-dev
 ```
@@ -18,7 +15,9 @@ npm install protractor-element-extend --save-dev
 Importing
 ----------------------
 JS:
+
 `let BaseFragment = require('protractor-element-extend').BaseFragment`
+
 `let BaseArrayFragment = require('protractor-element-extend').BaseArrayFragment`
 
 TS:
@@ -45,7 +44,7 @@ class Checkbox extends BaseFragment {
     this.isSelected().then(selected => {
       if(!selected) {
         this.click()
-        // Notice that because your element is valid ElementFinder - you can pass it as parameter to ExpectedConditions!
+        // Notice that because your element is valid ElementFinder - you can pass it as parameter to ExpectedConditions.
         browser.wait(EC.elementToBeSelected(this), 5000, `Checkbox ${this.locator()} must became selected after click, but it wasn't`)
       } else {
           console.warn(`Checkbox ${this.locator()} was already selected, skipping select`)
@@ -107,7 +106,7 @@ let searchResults = new SearchResultsCollection($$('.search-result'))
 searchResults.findResultsWithDiscount().first().open()
 ```
 
-Advanced usage
+More tricks
 ----------------------
 
 You can wrap any ElementFinder into your fragment:
@@ -126,14 +125,14 @@ var tag = browser.executeScript('return arguments[0].tagName', checkbox);
 expect(tag).toEqual('div');
 ```
 --------------------------------
-You can override ElementFinder or ElementArrayFinder methods, to get even more powerful waits!
+You can override ElementFinder or ElementArrayFinder methods, to get even more powerful functionality
 ```typescript
 ...
 import {promise} from 'protractor'
 
 class Checkbox extends BaseFragment {
   ...
-  // Ovveriding isDisplayed function that is used in visibilityOf method
+  // Ovveriding isDisplayed function that is used in ExpectedCondition.visibilityOf()
   isDisplayed() {
     let fragmentDisplayed = super.isDisplayed()
     let loaderDisplayed = $('.loader').isDispayed()
@@ -191,3 +190,16 @@ Future
 
 - Better logging for fragments. Provide possibility to set `name` attribute, and if it is not set - try to generate best we can with `locator()` 
 - Want some feature? Feel free to create issue!
+
+
+Something to read
+----------------------
+
+Source code for ElementFinder and ElementArrayFinder - 
+
+https://github.com/angular/protractor/blob/master/lib/element.ts
+
+Generics in TypeScript - 
+
+https://www.typescriptlang.org/docs/handbook/generics.html
+
