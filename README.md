@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Xotabu4/protractor-element-extend.svg?branch=master)](https://travis-ci.org/Xotabu4/protractor-element-extend)
+[![Build Status](https://travis-ci.org/Xotabu4/protractor-element-extend.svg?branch=master)](https://travis-ci.org/Xotabu4/protractor-element-extend)[![Join the chat at https://gitter.im/protractor-element-extend/Lobby](https://badges.gitter.im/protractor-element-extend/Lobby.svg)](https://gitter.im/protractor-element-extend/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 # Protractor Page Fragments
 
 Simple module, that helps you build your own page fragments, that are inherited from ElementFinder/ElementArrayFinder objects, that brings awesome posibilities to your ProtractorJS tests.
