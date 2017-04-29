@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/Xotabu4/protractor-element-extend.svg?branch=master)](https://travis-ci.org/Xotabu4/protractor-element-extend)
 # Protractor Page Fragments
 
+[![Join the chat at https://gitter.im/protractor-element-extend/Lobby](https://badges.gitter.im/protractor-element-extend/Lobby.svg)](https://gitter.im/protractor-element-extend/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Simple module, that helps you build your own fragments, that are still ElementFinder objects, that brings awesome posibilities to your tests.
 
 Main purpose of this library is to allow easily create your own page fragments, which are still will be valid ElementFinders. 
