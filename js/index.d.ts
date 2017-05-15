@@ -79,5 +79,5 @@ export declare class BaseArrayFragment<T extends ElementFinder> extends ElementA
      * @param {any} initialValue Initial value of the accumulator
      * @returns {wdpromise.Promise<any>} Promise that will be resolved to final value of the accumulator
      */
-    reduce(reduceFn: (value?, elementFinder?: T, index?: number, arr?: any) => any, initialValue: any): wdpromise.Promise<any>;
+    reduce(reduceFn: (value?: any, elementFinder?: T, index?: number, arr?: any) => any, initialValue: any): wdpromise.Promise<any>;
 }
