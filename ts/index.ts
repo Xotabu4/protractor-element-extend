@@ -122,5 +122,4 @@ export class BaseArrayFragment<T extends ElementFinder> extends ElementArrayFind
             return reduceFn(value, new this.class_(elementFinder), index, arr)
         }, initialValue)
     }
-
 }
