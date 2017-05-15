@@ -1,5 +1,6 @@
-/** @internal */
 "use strict";
+/** @internal */
+Object.defineProperty(exports, "__esModule", { value: true });
 const protractor_1 = require("protractor");
 const index_1 = require("./index");
 let Jasmine = require('jasmine');

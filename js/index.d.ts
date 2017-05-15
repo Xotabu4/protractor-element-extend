@@ -1,4 +1,3 @@
-/// <reference types="selenium-webdriver" />
 import { ElementFinder, ElementArrayFinder } from 'protractor';
 import { promise as wdpromise } from 'selenium-webdriver';
 export declare class BaseFragment extends ElementFinder {
