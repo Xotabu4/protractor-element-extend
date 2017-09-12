@@ -1,5 +1,5 @@
 import { ElementFinder, ElementArrayFinder } from 'protractor'
-import { promise as wdpromise} from 'selenium-webdriver';
+import { promise as wdpromise } from 'selenium-webdriver'
 
 
 export class BaseFragment extends ElementFinder {
@@ -100,9 +100,11 @@ export class BaseArrayFragment<T extends ElementFinder> extends ElementArrayFind
      * 
      * @returns {T} new object that contains filtered values
      */
-    filter(filterFn: (elementFinder?: T, index?: number) => boolean | wdpromise.Promise<boolean>): this {
+    filter(filterFn: (elementFinder?: T, index?: number) => boolean | wdpromise.Promise<boolean> | Promise<boolean>): this {
         // recreating same object, but with different elements inside it by calling constructor again
-        return new (this.constructor as any)(super.filter((elementFinder, index) => {
+        // Super-magic here, using 'any' for filter function to allow native promises to be returned
+        // So you can use async functions as filterFn
+        return new (this.constructor as any)(super.filter((elementFinder, index): any => {
             return filterFn(new this.class_(elementFinder), index)
         }), this.class_)
     }
