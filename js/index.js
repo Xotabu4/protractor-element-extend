@@ -91,6 +91,8 @@ class BaseArrayFragment extends protractor_1.ElementArrayFinder {
      */
     filter(filterFn) {
         // recreating same object, but with different elements inside it by calling constructor again
+        // Super-magic here, using 'any' for filter function to allow native promises to be returned
+        // So you can use async functions as filterFn
         return new this.constructor(super.filter((elementFinder, index) => {
             return filterFn(new this.class_(elementFinder), index);
         }), this.class_);

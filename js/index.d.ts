@@ -67,7 +67,7 @@ export declare class BaseArrayFragment<T extends ElementFinder> extends ElementA
      *
      * @returns {T} new object that contains filtered values
      */
-    filter(filterFn: (elementFinder?: T, index?: number) => boolean | wdpromise.Promise<boolean>): this;
+    filter(filterFn: (elementFinder?: T, index?: number) => boolean | wdpromise.Promise<boolean> | Promise<boolean>): this;
     /**
      * Allows to reduce collection into single value.
      *
