@@ -174,8 +174,11 @@ Supported versions
 ---------------------
 Currently tested on 
 NodeJS:
-- 6.x
-- 7.x
+- 6
+- 7
+- 8
+- 9
+- 10
 
 ProtractorJS:
 - 5.x
