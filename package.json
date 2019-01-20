@@ -1,6 +1,6 @@
 {
   "name": "protractor-element-extend",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Module, that helps you to extend ElementFinder and ElementArrayFinder from protractor by your own custom classes",
   "repository": {
     "type": "git",
@@ -8,24 +8,27 @@
   },
   "author": "Oleksandr Khotemskyi <xotabu4@gmail.com> (https://github.com/Xotabu4)",
   "license": "WTFPL",
-  "main": "js/index.js",
-  "types": "js/index.d.ts",
+  "main": "built/index.js",
+  "types": "built/index.d.ts",
   "engines": {
     "node": ">=6.0.0"
   },
   "scripts": {
-    "pretest": "cd ts && tsc",
-    "test": "node js/test.js",
-    "prepublish": "cd ts && tsc"
+    "pretest": "tsc",
+    "test": "node built/test.js",
+    "prepublish": "tsc"
   },
   "keywords": [
     "protractor",
+    "protractorjs",
+    "pageobject",
     "extend",
     "elementfinder",
     "elementarrayfinder"
   ],
   "devDependencies": {
     "@types/jasmine": "^2.5.3",
+    "@types/node": "^10.0.0",
     "protractor": "^5.1.1",
     "typescript": "^2.0.7",
     "jasmine": "^2.5.3"

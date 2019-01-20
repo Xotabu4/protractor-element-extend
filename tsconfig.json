@@ -4,9 +4,10 @@
         "module": "commonjs",
         "declaration": true,
         "sourceMap": true,
-        "outDir": "../js"
+        "outDir": "built/"
     },
     "exclude": [
-        "node_modules"
+        "built/",
+        "node_modules/"
     ]
 }
