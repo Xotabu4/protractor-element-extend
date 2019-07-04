@@ -51,6 +51,17 @@ class BaseArrayFragment extends protractor_1.ElementArrayFinder {
         super(elementArrayFinder.browser_, elementArrayFinder.getWebElements, elementArrayFinder.locator(), elementArrayFinder.actionResults_);
         this.elementArrayFinder_ = elementArrayFinder;
         this.class_ = class_;
+        Object.getOwnPropertyNames(this).forEach(thisFuncName => {
+            if (WEB_ELEMENT_FUNCTIONS.indexOf(thisFuncName) !== -1) {
+                Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(this)))[thisFuncName] = (...args) => {
+                    let actionFn = (webElem) => {
+                        return webElem[thisFuncName].apply(webElem, args);
+                    };
+                    return this['applyAction_'](actionFn);
+                };
+                delete this[thisFuncName];
+            }
+        });
     }
     /**
      * Get an element within the ElementArrayFinder by index. The index starts at 0.

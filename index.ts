@@ -60,9 +60,9 @@ export class BaseArrayFragment<T extends ElementFinder> extends ElementArrayFind
         super(elementArrayFinder.browser_, elementArrayFinder.getWebElements, elementArrayFinder.locator(), elementArrayFinder.actionResults_);
         this.elementArrayFinder_ = elementArrayFinder
         this.class_ = class_
-        
+
         Object.getOwnPropertyNames(this).forEach(thisFuncName => {
-            if (WEB_ELEMENT_FUNCTIONS.indexOf(thisFuncName) === -1) {
+            if (WEB_ELEMENT_FUNCTIONS.indexOf(thisFuncName) !== -1) {
                 Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(this)))[
                     thisFuncName
                 ] = (...args) => {

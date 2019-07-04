@@ -1,6 +1,6 @@
 {
   "name": "protractor-element-extend",
-  "version": "2.3.0-alpha",
+  "version": "2.3.0-alpha-2",
   "description": "Module, that helps you to extend ElementFinder and ElementArrayFinder from protractor by your own custom classes",
   "repository": {
     "type": "git",
