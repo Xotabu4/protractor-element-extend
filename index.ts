@@ -1,6 +1,23 @@
 import { ElementFinder, ElementArrayFinder } from 'protractor'
 import { promise as wdpromise } from 'selenium-webdriver'
 
+let WEB_ELEMENT_FUNCTIONS = [
+    "click",
+    "sendKeys",
+    "getTagName",
+    "getCssValue",
+    "getAttribute",
+    "getText",
+    "getSize",
+    "getLocation",
+    "isEnabled",
+    "isSelected",
+    "submit",
+    "clear",
+    "isDisplayed",
+    "getId",
+    "takeScreenshot"
+];
 
 export class BaseFragment extends ElementFinder {
     /**
@@ -11,6 +28,18 @@ export class BaseFragment extends ElementFinder {
     constructor(elementFinder: ElementFinder) {
         // Basically we are recreating ElementFinder again with same parameters
         super(elementFinder.browser_, elementFinder.elementArrayFinder_)
+        Object.getOwnPropertyNames(this).forEach(thisFuncName => {
+            if (WEB_ELEMENT_FUNCTIONS.indexOf(thisFuncName) === -1) {
+                Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(this)))[
+                    thisFuncName
+                ] = (...args) => {
+                    return this.elementArrayFinder_[thisFuncName]
+                        .apply(this.elementArrayFinder_, args)
+                        .toElementFinder_();
+                };
+                delete this[thisFuncName];
+            }
+        });
     }
 }
 
@@ -31,6 +60,20 @@ export class BaseArrayFragment<T extends ElementFinder> extends ElementArrayFind
         super(elementArrayFinder.browser_, elementArrayFinder.getWebElements, elementArrayFinder.locator(), elementArrayFinder.actionResults_);
         this.elementArrayFinder_ = elementArrayFinder
         this.class_ = class_
+        
+        Object.getOwnPropertyNames(this).forEach(thisFuncName => {
+            if (WEB_ELEMENT_FUNCTIONS.indexOf(thisFuncName) === -1) {
+                Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(this)))[
+                    thisFuncName
+                ] = (...args) => {
+                    let actionFn = (webElem) => {
+                        return webElem[thisFuncName].apply(webElem, args);
+                    };
+                    return this['applyAction_'](actionFn);
+                };
+                delete this[thisFuncName];
+            }
+        });
     }
     /**
      * Get an element within the ElementArrayFinder by index. The index starts at 0.

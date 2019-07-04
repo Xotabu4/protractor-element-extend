@@ -1,6 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const protractor_1 = require("protractor");
+let WEB_ELEMENT_FUNCTIONS = [
+    "click",
+    "sendKeys",
+    "getTagName",
+    "getCssValue",
+    "getAttribute",
+    "getText",
+    "getSize",
+    "getLocation",
+    "isEnabled",
+    "isSelected",
+    "submit",
+    "clear",
+    "isDisplayed",
+    "getId",
+    "takeScreenshot"
+];
 class BaseFragment extends protractor_1.ElementFinder {
     /**
      * Extend this class, to describe single custom fragment on your page
@@ -10,6 +27,16 @@ class BaseFragment extends protractor_1.ElementFinder {
     constructor(elementFinder) {
         // Basically we are recreating ElementFinder again with same parameters
         super(elementFinder.browser_, elementFinder.elementArrayFinder_);
+        Object.getOwnPropertyNames(this).forEach(thisFuncName => {
+            if (WEB_ELEMENT_FUNCTIONS.indexOf(thisFuncName) === -1) {
+                Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(this)))[thisFuncName] = (...args) => {
+                    return this.elementArrayFinder_[thisFuncName]
+                        .apply(this.elementArrayFinder_, args)
+                        .toElementFinder_();
+                };
+                delete this[thisFuncName];
+            }
+        });
     }
 }
 exports.BaseFragment = BaseFragment;
