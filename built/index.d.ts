@@ -79,4 +79,26 @@ export declare class BaseArrayFragment<T extends ElementFinder> extends ElementA
      * @returns {wdpromise.Promise<any>} Promise that will be resolved to final value of the accumulator
      */
     reduce(reduceFn: (value?: any, elementFinder?: T, index?: number, arr?: any) => any, initialValue: any): wdpromise.Promise<any>;
+    /**
+     * Determines whether all the members of an BaseArrayFragment satisfy the specified test.
+     * Works the same as native Array.every(): return true for an empty BaseArrayFragment
+     * @param callbackfn A function that accepts up to three arguments. The every method calls the callbackfn function for each element in array1 until the callbackfn returns false, or until the end of the array.
+     * @returns {wdpromise.Promise<boolean>} Promise that will be resolved to test result
+     */
+    every(callbackfn: (elementFinder?: T, index?: number, array?: T[]) => boolean | wdpromise.Promise<boolean> | Promise<boolean>): wdpromise.Promise<boolean>;
+    /**
+     * Determines whether the specified callback function returns true for any element of an BaseArrayFragment.
+     * Works the same as native Array.some(): return false for an empty BaseArrayFragment
+     * @param callbackfn A function that accepts up to three arguments. The some method calls the callbackfn function for each element in array1 until the callbackfn returns true, or until the end of the array.
+     * @returns {wdpromise.Promise<boolean>} Promise that will be resolved to test result
+     */
+    some(callbackfn: (elementFinder?: T, index?: number, array?: T[]) => boolean | wdpromise.Promise<boolean> | Promise<boolean>): wdpromise.Promise<boolean>;
+    /**
+     * Returns the value of the first element in the BaseArrayFragment where predicate is true, and undefined
+     * otherwise.
+     * @param predicate find calls predicate once for each element of the BaseArrayFragment, in ascending
+     * order, until it finds one where predicate returns true. Otherwise, find returns undefined.
+     * @returns {Promise<T | undefined>} Promise that will be resolved to first found <T extends ElementFinder> or undefined
+     */
+    find(predicate: (elementFinder?: T, index?: number, array?: T[]) => boolean | wdpromise.Promise<boolean> | Promise<boolean>): Promise<T | undefined>;
 }
