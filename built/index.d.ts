@@ -1,5 +1,6 @@
 import { ElementFinder, ElementArrayFinder } from 'protractor';
 import { promise as wdpromise } from 'selenium-webdriver';
+export declare const WEB_ELEMENT_FUNCTIONS: string[];
 export declare class BaseFragment extends ElementFinder {
     /**
      * Extend this class, to describe single custom fragment on your page

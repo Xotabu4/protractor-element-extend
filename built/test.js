@@ -1,5 +1,13 @@
 "use strict";
 /** @internal */
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const protractor_1 = require("protractor");
 const index_1 = require("./index");
@@ -26,10 +34,17 @@ class TestFragment extends index_1.BaseFragment {
     constructor(elem) {
         super(elem);
     }
+    click() {
+        super.click();
+        return true;
+    }
 }
 class TestArrayFragment extends index_1.BaseArrayFragment {
     constructor(elementArrayFinder) {
         super(elementArrayFinder, TestFragment);
+    }
+    click() {
+        return true;
     }
 }
 ///////////////////////////////////////////////////
@@ -40,6 +55,12 @@ describe('BaseFragment', () => {
     });
     it('should still be ElementFinder', function () {
         expect(testFrag instanceof protractor_1.ElementFinder).toBeTruthy("Fragment still should be ElementFinder");
+    });
+    it('should allow override of WebElement methods', function () {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res = testFrag.click();
+            expect(res).toBe(true);
+        });
     });
 });
 describe('BaseArrayFragment', () => {
@@ -79,6 +100,18 @@ describe('BaseArrayFragment', () => {
         expect(arrayFrag.get(0) instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'get' ");
         expect(arrayFrag.first() instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'first' ");
         expect(arrayFrag.last() instanceof TestFragment).toBeTruthy("You should get custom elements, not ElementFinder while calling 'last' ");
+    });
+    it('should allow override of ElementArrayFinder methods', function () {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res = arrayFrag.click();
+            expect(res).toBe(true);
+        });
+    });
+    it('should allow override of ElementArrayFinder methods', function () {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res = arrayFrag.click();
+            expect(res).toBe(true);
+        });
     });
 });
 jasmine.execute(['test.js']);

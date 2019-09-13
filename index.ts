@@ -1,7 +1,7 @@
 import { ElementFinder, ElementArrayFinder } from 'protractor'
 import { promise as wdpromise } from 'selenium-webdriver'
 
-let WEB_ELEMENT_FUNCTIONS = [
+export const WEB_ELEMENT_FUNCTIONS = [
     "click",
     "sendKeys",
     "getTagName",
@@ -28,8 +28,9 @@ export class BaseFragment extends ElementFinder {
     constructor(elementFinder: ElementFinder) {
         // Basically we are recreating ElementFinder again with same parameters
         super(elementFinder.browser_, elementFinder.elementArrayFinder_)
+        // HACK. Bug #20
         Object.getOwnPropertyNames(this).forEach(thisFuncName => {
-            if (WEB_ELEMENT_FUNCTIONS.indexOf(thisFuncName) === -1) {
+            if (WEB_ELEMENT_FUNCTIONS.indexOf(thisFuncName) !== -1) {
                 Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(this)))[
                     thisFuncName
                 ] = (...args) => {
