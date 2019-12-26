@@ -77,6 +77,9 @@ import { browser, ExpectedConditions as EC, $$ } from 'protractor'
 
 // Describing single search result on our page. Notice that constructor declaration could be skipped, in this case constructor from BaseFragment will be used
 class SearchResult extends BaseFragment {
+    name() {
+      return $('.name').getText()
+    }
 
     isDiscounted() {
         return this.$('.discount-label').isDisplayed()
@@ -105,6 +108,10 @@ let searchResults = new SearchResultsCollection($$('.search-result'))
 // Awesome readability for your tests
 searchResults.findResultsWithDiscount().first().open()
 ```
+
+BaseArrayFragment also supports additional array methods that does not exist in ElementArrayFinder in ProtractorJS:
+`.every()` `.some()` `.find()`
+
 
 More tricks
 ----------------------
